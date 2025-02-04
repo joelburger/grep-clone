@@ -1,7 +1,8 @@
 function matchPattern(inputLine, pattern) {
-  if (pattern.length > 0) {
-    const regex = new RegExp(pattern);
-    return regex.test(inputLine);
+  if (pattern.length === 1) {
+    return inputLine.includes(pattern);
+  } else if (pattern === '\\d') {
+    return /\d/.test(inputLine);
   } else {
     throw new Error(`Unhandled pattern ${pattern}`);
   }
