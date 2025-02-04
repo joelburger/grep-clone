@@ -5,6 +5,14 @@ function matchPattern(inputLine, pattern) {
     return /\d/.test(inputLine);
   } else if (pattern === '\\w') {
     return /\w/.test(inputLine);
+  } else if (pattern.startsWith('[') && pattern.endsWith(']')) {
+    for (const patternChar of pattern) {
+      const result = inputLine.includes(patternChar);
+      if (result) {
+        return true;
+      }
+    }
+    return false;
   } else {
     throw new Error(`Unhandled pattern ${pattern}`);
   }
