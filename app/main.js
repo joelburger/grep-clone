@@ -1,3 +1,5 @@
+function isGroup(inputLine) {}
+
 function matchPattern(inputLine, pattern) {
   if (pattern.length === 1) {
     return inputLine.includes(pattern);
@@ -5,14 +7,13 @@ function matchPattern(inputLine, pattern) {
     return /\d/.test(inputLine);
   } else if (pattern === '\\w') {
     return /\w/.test(inputLine);
+  } else if (pattern.startsWith('[^') && pattern.endsWith(']')) {
+    const negativeGroupPattern = new RegExp(
+      '[^' + pattern.slice(2, pattern.length - 1) + ']'
+    );
+    return negativeGroupPattern.test(inputLine);
   } else if (pattern.startsWith('[') && pattern.endsWith(']')) {
-    for (const patternChar of pattern) {
-      const result = inputLine.includes(patternChar);
-      if (result) {
-        return true;
-      }
-    }
-    return false;
+    return pattern.slice(1, pattern.length - 1).includes(inputLine);
   } else {
     throw new Error(`Unhandled pattern ${pattern}`);
   }
